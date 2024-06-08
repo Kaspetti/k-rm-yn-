@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8">
+    <title>Karmøy Stickers</title>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+      #tooltip {
+        position: absolute;
+        z-index: 999;
+        max-width: 20em;
+        background-color: lightgrey;
+        opacity: 0.0;
+        padding: 1em;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map" style="height: 100vh">
+      <div id="tooltip">
+        <p id="idText">Id: </p>
+        <p id="locationText">Location: </p>
+        <p id="descriptionText">Beskrivelse: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ornare interdum. Vivamus at velit quis massa consectetur bibendum vitae a quam. Nulla vel sapien neque. Morbi sollicitudin turpis in urna ultrices, nec congue felis tincidunt. Etiam tempus porttitor sem, et tristique magna. Pellentesque a ante mauris. Donec viverra augue vitae egestas vestibulum. Aliquam faucibus, ipsum non rhoncus sagittis, dolor purus posuere nisi, ut egestas dolor elit sed libero. </p>
+      </div>
+    </div>
+
+    <script src={{ url_for('static', filename='./js/index.js') }}></script>
+  </body>
+</html>
