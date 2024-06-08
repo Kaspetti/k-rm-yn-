@@ -57,8 +57,8 @@ async function init() {
       tooltip.style.transform = `translate(${e.containerPoint.x}px, ${e.containerPoint.y}px)`
 
       idText.innerText = `Id: ${this.data.navn}`
-      locationText.innerText = `Location: Lat: ${this.data.WKT[1]} | Lon: ${this.data.WKT[0]}`
-      descriptionText.innerText = `Description: ${this.data.beskrivelse}`
+      locationText.innerText = `Location:\n\  Lat: ${this.data.WKT[1]}\n  Lon: ${this.data.WKT[0]}`
+      descriptionText.innerText = `Description: ${this.data.beskrivelse ? this.data.beskrivelse : "No description"}`
     })
   })
 }
