@@ -1,17 +1,32 @@
 #tooltip {
+  display: flex;
   position: absolute;
   z-index: 999;
-  max-width: 20em;
-  background-color: lightgrey;
+  max-width: 50em;
+  background-color: #cccd;
   opacity: 0.0;
   padding: 0.5em 1em;
   pointer-events: none;
+  border-radius: 5px;
+  box-shadow: -5px 5px 5px grey;
 }
 
-#tooltip p {
+#tooltipInfo p {
   font-size: 1.2em;
+}
+
+#tooltipInfo {
+  flex: 1;
+  min-width: 0;
 }
 
 #locationText {
   white-space: pre-wrap;
+}
+
+#tooltipImage {
+  width: auto;
+  max-height: 30em;
+  object-fit: contain;
+  margin-left: 1em;
 }

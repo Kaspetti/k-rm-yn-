@@ -1,10 +1,11 @@
 /// <reference types="leaflet" />
 
 
-const tooltip = document.getElementById("tooltip")
-const idText = document.getElementById("idText")
-const locationText = document.getElementById("locationText")
+const tooltip         = document.getElementById("tooltip")
+const idText          = document.getElementById("idText")
+const locationText    = document.getElementById("locationText")
 const descriptionText = document.getElementById("descriptionText")
+const tooltipImage    = document.getElementById("tooltipImage")
 
 
 async function init() {
@@ -53,12 +54,13 @@ async function init() {
 
     circle.on('click', function (e) {
       L.DomEvent.stopPropagation(e);
-      tooltip.style.opacity = 0.8;
+      tooltip.style.opacity = 1;
       tooltip.style.transform = `translate(${e.containerPoint.x}px, ${e.containerPoint.y}px)`
 
       idText.innerText = `Id: ${this.data.navn}`
       locationText.innerText = `Location:\n\  Lat: ${this.data.WKT[1]}\n  Lon: ${this.data.WKT[0]}`
       descriptionText.innerText = `Description: ${this.data.beskrivelse ? this.data.beskrivelse : "No description"}`
+      tooltipImage.src = `/api/images?id=${this.data.navn}`
     })
   })
 }
