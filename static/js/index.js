@@ -1,18 +1,24 @@
 /// <reference types="leaflet" />
 
+let markers
+let timeIndex
+let data
 
 const tooltip         = document.getElementById("tooltip")
 const idText          = document.getElementById("idText")
 const locationText    = document.getElementById("locationText")
 const descriptionText = document.getElementById("descriptionText")
 const tooltipImage    = document.getElementById("tooltipImage")
-
+const timeIndexText   = document.getElementById("timeIndexText")
 
 async function init() {
-  const data = await d3.json("/api/data")
+  data = await d3.json("/api/data")
+  timeIndex = data.length
 
-  var map = L.map('map')
+  let map = L.map('map')
     .setView([60.385, 5.34], 14.5)
+
+  markers = L.layerGroup().addTo(map)
 
   map.on('mousedown', function() {
     tooltip.style.opacity = 0.0
@@ -26,13 +32,21 @@ async function init() {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
-  data.forEach(d => {
+  populateCircles()
+}
+
+
+function populateCircles() {
+  markers.clearLayers()
+  timeIndexText.innerText = timeIndex
+
+  data.slice(0, timeIndex).forEach(d => {
     const circle = L.circle([d.WKT[1], d.WKT[0]], {
       color: 'red',
       fillColor: '#f03',
       fillOpacity: 0.5,
       radius: 7
-    }).addTo(map);
+    }).addTo(markers);
 
     circle.data = d
 
@@ -63,6 +77,21 @@ async function init() {
       tooltipImage.src = `/api/images?id=${this.data.navn}`
     })
   })
+}
+
+
+function goBackTimeline() {
+  if (timeIndex > 0) {
+    timeIndex--
+  populateCircles()
+  }
+}
+
+function goForwardTimeline() {
+  if (timeIndex < data.length) {
+    timeIndex++
+    populateCircles()
+  }
 }
 
 

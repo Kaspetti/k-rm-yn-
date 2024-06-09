@@ -27,6 +27,12 @@
         </div>
         <img id="tooltipImage" src="/api/images?id=420"/>
       </div>
+
+    </div>
+    <div id="timeline">
+      <button id="timelineBack" onclick="goBackTimeline()"><</button>
+      <p id="timeIndexText">1</p>
+      <button id="timelineForward" onclick="goForwardTimeline()">></button>
     </div>
 
     <script src={{ url_for('static', filename='./js/index.js') }}></script>
