@@ -32,6 +32,10 @@ async function init() {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
+  tooltipImage.onerror = function() {
+    tooltipImage.src = "/static/images/placeholder.jpg"
+  }
+
   populateCircles()
 }
 
@@ -41,7 +45,7 @@ function populateCircles() {
   timeIndexText.innerText = timeIndex
 
   data.slice(0, timeIndex).forEach(d => {
-    const circle = L.circle([d.WKT[1], d.WKT[0]], {
+    const circle = L.circle([d.latitude, d.longitude], {
       color: 'red',
       fillColor: '#f03',
       fillOpacity: 0.5,
@@ -70,10 +74,10 @@ function populateCircles() {
       L.DomEvent.stopPropagation(e);
       tooltip.style.transform = `translate(${e.containerPoint.x}px, ${e.containerPoint.y}px)`
 
-      idText.innerText = `Id: ${this.data.navn}`
-      locationText.innerText = `Location:\n\  Lat: ${this.data.WKT[1]}\n  Lon: ${this.data.WKT[0]}`
-      descriptionText.innerText = `Description: ${this.data.beskrivelse ? this.data.beskrivelse : "No description"}`
-      tooltipImage.src = `/api/images?id=${this.data.navn}`
+      idText.innerText = `Id: ${this.data.id}`
+      locationText.innerText = `Location:\n\  Lat: ${this.data.latitude}\n  Lon: ${this.data.longitude}`
+      descriptionText.innerText = `Description: ${this.data.description ? this.data.description : "No description"}`
+      tooltipImage.src = `/static/images/${this.data.id}.jpg`
 
       tooltip.style.opacity = 1;
     })
