@@ -28,7 +28,7 @@ def get_image():
     if not image_id:
         return send_file("./static/images/placeholder.jpg")
 
-    if not any(f.split(".")[0] == image_id for f in os.listdir("./static/images/")):
+    if not os.path.isfile(f"./static/images/{image_id}.jpg"):
         return send_file("./static/images/placeholder.jpg")
 
     return send_file(f"./static/images/{image_id}.jpg", mimetype="image/jpeg")
