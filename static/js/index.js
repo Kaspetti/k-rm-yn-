@@ -30,9 +30,6 @@ async function init() {
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    useCache: true,
-    crossOrigin: true,
-    userAgentParamName: 'KarmoyStickers/0.0.1'
   }).addTo(map);
 
   tooltipImage.onerror = function() {
