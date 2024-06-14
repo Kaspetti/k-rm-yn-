@@ -11,6 +11,7 @@ import (
 
 func main() {
   r := gin.Default() 
+  r.SetTrustedProxies(nil)
 
   r.Static("/static", "./static")
 
@@ -33,5 +34,5 @@ func main() {
     c.JSON(http.StatusOK, karmoyStickers)
   })
 
-  r.Run()
+  r.Run("0.0.0.0:80")
 }
