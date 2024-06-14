@@ -34,5 +34,5 @@ func main() {
     c.JSON(http.StatusOK, karmoyStickers)
   })
 
-  r.Run("0.0.0.0:80")
+  r.Run("127.0.0.1:8080")
 }
