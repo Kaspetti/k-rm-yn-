@@ -100,4 +100,9 @@ function goForwardTimeline() {
 }
 
 
+function openImg() {
+  window.open(tooltipImage.src, "_blank").focus()
+}
+
+
 init()
