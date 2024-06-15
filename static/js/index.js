@@ -70,7 +70,7 @@ function populateCircles() {
       }) 
     })
 
-    circle.on('click', function (e) {
+    circle.on('click', async function (e) {
       L.DomEvent.stopPropagation(e);
       tooltip.style.transform = `translate(${e.containerPoint.x}px, ${e.containerPoint.y}px)`
 
@@ -79,7 +79,9 @@ function populateCircles() {
       descriptionText.innerText = `Description: ${this.data.description ? this.data.description : "No description"}`
       tooltipImage.src = `/static/images/${this.data.id}.jpg`
 
-      tooltip.style.opacity = 1;
+      tooltipImage.onload = function () {
+        tooltip.style.opacity = 1;
+      }
     })
   })
 }
