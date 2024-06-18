@@ -70,7 +70,22 @@ function populateCircles() {
 
     circle.on('click', async function (e) {
       L.DomEvent.stopPropagation(e);
-      tooltip.style.transform = `translate(${e.containerPoint.x}px, ${e.containerPoint.y}px)`
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      let translateX = e.containerPoint.x;
+      let translateY = e.containerPoint.y;
+
+      if (translateX + tooltipRect.width > screenWidth) {
+        translateX = screenWidth - tooltipRect.width;
+      }
+
+      if (translateY + tooltipRect.height > screenHeight) {
+        translateY = screenHeight - tooltipRect.height;
+      }
+
+      tooltip.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
       idText.innerText = `Id: ${this.data.id}`
       locationText.innerText = `Location:\n\  Lat: ${this.data.latitude}\n  Lon: ${this.data.longitude}`
