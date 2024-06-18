@@ -41,6 +41,7 @@ func main() {
     r.GET("/api/data", func(c *gin.Context) {
         karmoyStickers, err := data.GetData("data.csv")
         if err != nil {
+            log.Printf("Error: %v\n", err)
             c.JSON(http.StatusInternalServerError, gin.H {
                 "message": "An error occured on our end when fetching the data",
             })

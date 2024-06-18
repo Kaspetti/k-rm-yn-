@@ -28,6 +28,8 @@ func GetData(path string) ([]KarmoySticker, error) {
   defer f.Close()
 
   csvReader := csv.NewReader(f)
+  csvReader.Comma = ';'
+
   data, err := csvReader.ReadAll()
   if err != nil {
     return nil, err
