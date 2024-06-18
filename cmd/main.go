@@ -25,7 +25,7 @@ func main() {
     port, exists := os.LookupEnv("PORT")
     if !exists {
         log.Printf("PORT not in environment. Using '6969'")
-        ip = "6969"
+        port = "6969"
     }
 
     r.Static("/static", "./static")
