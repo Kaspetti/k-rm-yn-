@@ -1,7 +1,7 @@
 /// <reference types="leaflet" />
 
+
 let markers
-let timeIndex
 let data
 
 const tooltip         = document.getElementById("tooltip")
@@ -9,11 +9,10 @@ const idText          = document.getElementById("idText")
 const locationText    = document.getElementById("locationText")
 const descriptionText = document.getElementById("descriptionText")
 const tooltipImage    = document.getElementById("tooltipImage")
-const timeIndexText   = document.getElementById("timeIndexText")
+
 
 async function init() {
   data = await d3.json("/api/data")
-  timeIndex = data.length
 
   let map = L.map('map')
     .setView([60.385, 5.34], 14.5)
@@ -42,9 +41,8 @@ async function init() {
 
 function populateCircles() {
   markers.clearLayers()
-  timeIndexText.innerText = timeIndex
 
-  data.slice(0, timeIndex).forEach(d => {
+  data.forEach(d => {
     const circle = L.circle([d.latitude, d.longitude], {
       color: 'red',
       fillColor: '#f03',
@@ -84,21 +82,6 @@ function populateCircles() {
       }
     })
   })
-}
-
-
-function goBackTimeline() {
-  if (timeIndex > 0) {
-    timeIndex--
-  populateCircles()
-  }
-}
-
-function goForwardTimeline() {
-  if (timeIndex < data.length) {
-    timeIndex++
-    populateCircles()
-  }
 }
 
 
