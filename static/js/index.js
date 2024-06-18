@@ -3,6 +3,7 @@
 
 let markers
 let data
+let map
 
 const tooltip         = document.getElementById("tooltip")
 const idText          = document.getElementById("idText")
@@ -10,11 +11,12 @@ const locationText    = document.getElementById("locationText")
 const descriptionText = document.getElementById("descriptionText")
 const tooltipImage    = document.getElementById("tooltipImage")
 
+let focusing = false
 
 async function init() {
   data = await d3.json("/api/data")
 
-  let map = L.map('map')
+  map = L.map('map')
     .setView([60.385, 5.34], 14.5)
 
   markers = L.layerGroup().addTo(map)
@@ -70,29 +72,22 @@ function populateCircles() {
 
     circle.on('click', async function (e) {
       L.DomEvent.stopPropagation(e);
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
 
-      let translateX = e.containerPoint.x;
-      let translateY = e.containerPoint.y;
-
-      if (translateX + tooltipRect.width > screenWidth) {
-        translateX = screenWidth - tooltipRect.width;
-      }
-
-      if (translateY + tooltipRect.height > screenHeight) {
-        translateY = screenHeight - tooltipRect.height;
-      }
-
-      tooltip.style.transform = `translate(${translateX}px, ${translateY}px)`;
+      map.setView([this.data.latitude, this.data.longitude], 18)
+      focusing = true
+      map.on("zoomend moveend", function() {
+        if (focusing) {
+          tooltip.style.transform = `translate(${window.innerWidth/2}px, ${window.innerHeight/2}px)`;
+          tooltip.style.opacity = 1
+          focusing = false
+        }
+      })
 
       idText.innerText = `Id: ${this.data.id}`
       locationText.innerText = `Koordinater: ${this.data.latitude}, ${this.data.longitude}`
       descriptionText.innerText = `Beskrivelse: ${this.data.description ? this.data.description : "No description"}`
 
       tooltipImage.src = `/static/images/${this.data.id}.jpg`;
-      tooltip.style.opacity = 1
     })
   })
 }
