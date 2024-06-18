@@ -10,16 +10,9 @@ const locationText    = document.getElementById("locationText")
 const descriptionText = document.getElementById("descriptionText")
 const tooltipImage    = document.getElementById("tooltipImage")
 
-let images = {}
 
 async function init() {
   data = await d3.json("/api/data")
-
-  for (let i = 0; i <= data.length; i++) {
-    const image = new Image()
-    image.src = `/static/images/${i}.jpg`
-    images[i] = image
-  }
 
   let map = L.map('map')
     .setView([60.385, 5.34], 14.5)
@@ -39,11 +32,7 @@ async function init() {
   }).addTo(map);
 
   tooltipImage.onerror = function() {
-      if (images[0]) {
-        tooltipImage.src = images[0].src;
-      } else {
-        tooltipImage.src = `/static/images/0.jpg`;
-      }
+    tooltipImage.src = `/static/images/0.jpg`;
   }
 
   populateCircles()
@@ -102,15 +91,11 @@ function populateCircles() {
       locationText.innerText = `Location:\n\  Lat: ${this.data.latitude}\n  Lon: ${this.data.longitude}`
       descriptionText.innerText = `Description: ${this.data.description ? this.data.description : "No description"}`
 
-      if (images[this.data.id]) {
-        tooltipImage.src = images[this.data.id].src;
-      } else {
-        tooltipImage.src = `/static/images/${this.data.id}.jpg`;
-      }
+      tooltipImage.src = `/static/images/${this.data.id}.jpg`;
 
-      tooltipImage.onload = function () {
-        tooltip.style.opacity = 1;
-      }
+      // tooltipImage.onload = function () {
+      //   tooltip.style.opacity = 1;
+      // }
     })
   })
 }
