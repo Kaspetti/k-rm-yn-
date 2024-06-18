@@ -88,8 +88,8 @@ function populateCircles() {
       tooltip.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
       idText.innerText = `Id: ${this.data.id}`
-      locationText.innerText = `Location:\n\  Lat: ${this.data.latitude}\n  Lon: ${this.data.longitude}`
-      descriptionText.innerText = `Description: ${this.data.description ? this.data.description : "No description"}`
+      locationText.innerText = `Koordinater:\n\t${this.data.latitude}, ${this.data.longitude}`
+      descriptionText.innerText = `Beskrivelse: ${this.data.description ? this.data.description : "No description"}`
 
       tooltipImage.src = `/static/images/${this.data.id}.jpg`;
       tooltip.style.opacity = 1
