@@ -92,10 +92,7 @@ function populateCircles() {
       descriptionText.innerText = `Description: ${this.data.description ? this.data.description : "No description"}`
 
       tooltipImage.src = `/static/images/${this.data.id}.jpg`;
-
-      // tooltipImage.onload = function () {
-      //   tooltip.style.opacity = 1;
-      // }
+      tooltip.style.opacity = 1
     })
   })
 }
