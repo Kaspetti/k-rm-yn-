@@ -50,5 +50,6 @@ func main() {
         c.JSON(http.StatusOK, karmoyStickers)
     })
 
+    log.Printf("Start listening on: %s:%s\n", ip, port)
     r.Run(fmt.Sprintf("%s:%s", ip, port))
 }
