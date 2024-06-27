@@ -1,3 +1,5 @@
+// data contains functions for reading the csv file of karmoy stickers and converts it
+// to an array of KarmoySticker structs
 package data
 
 import (

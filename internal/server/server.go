@@ -1,3 +1,5 @@
+// server is responsible for all server related functionality on karmoy stickers
+// creates endpoints for necessary files and data
 package server
 
 import (
@@ -23,6 +25,8 @@ func StartServer(ip, port string) error {
         })
     })
 
+    // Get the data from the csv file using the data package
+    // and send it to the user
     r.GET("/api/data", func(c *gin.Context) {
         karmoyStickers, err := data.GetData("data.csv")
         if err != nil {
