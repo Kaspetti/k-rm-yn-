@@ -24,6 +24,11 @@ func StartServer(ip, port string) error {
             "title": "Karmøy Stickers",
         })
     })
+    r.GET("/admin", func(c *gin.Context) {
+        c.HTML(http.StatusOK, "admin.html", gin.H {
+            "title": "Karmøy Admin",
+        })
+    })
 
     // Get the data from the csv file using the data package
     // and send it to the user
