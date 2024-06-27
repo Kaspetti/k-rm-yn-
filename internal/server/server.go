@@ -39,6 +39,8 @@ func StartServer(ip, port string) error {
         c.JSON(http.StatusOK, karmoyStickers)
     })
 
+    r.POST("/api/upload", uploadFile)
+
     log.Printf("Start listening on: %s:%s\n", ip, port)
     return r.Run(fmt.Sprintf("%s:%s", ip, port))
 }
