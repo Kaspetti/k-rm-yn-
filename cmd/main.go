@@ -1,21 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
 	"os"
 
-	"github.com/Kaspetti/k-rm-yn-/internal/data"
-	"github.com/gin-gonic/gin"
+	"github.com/Kaspetti/k-rm-yn-/internal/server"
 )
 
 
 
 func main() {
-    r := gin.Default() 
-    r.SetTrustedProxies(nil)
-
     ip, exists := os.LookupEnv("IP")
     if !exists {
         log.Printf("IP not in environment. Using '127.0.0.1'")
@@ -28,28 +22,8 @@ func main() {
         port = "6969"
     }
 
-    r.Static("/static", "./static")
-
-    r.LoadHTMLGlob("./templates/*")
-    r.GET("/", func(c *gin.Context) {
-        c.HTML(http.StatusOK, "index.html", gin.H {
-            "title": "Karmøy Stickers",
-        })
-    })
-
-
-    r.GET("/api/data", func(c *gin.Context) {
-        karmoyStickers, err := data.GetData("data.csv")
-        if err != nil {
-            log.Printf("Error: %v\n", err)
-            c.JSON(http.StatusInternalServerError, gin.H {
-                "message": "An error occured on our end when fetching the data",
-            })
-        }
-
-        c.JSON(http.StatusOK, karmoyStickers)
-    })
-
-    log.Printf("Start listening on: %s:%s\n", ip, port)
-    r.Run(fmt.Sprintf("%s:%s", ip, port))
+    if err := server.StartServer(ip, port); err != nil {
+        log.Printf("Error while starting server: %v\n", err)
+        return
+    }
 }
