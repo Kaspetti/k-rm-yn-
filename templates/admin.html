@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Karmøy Admin</title>
-    <link rel="icon" type="image/x-icon" href="/static/images/favicon-16x16.png">
-
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon/favicon.png">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -19,8 +18,11 @@
   </head>
 
   <body>
-    <form action="/upload" method="POST">
-      <input type="file" name="file" required>
+    <form action="/api/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" id="file" name="file" required>
+      <br>
+      <textarea id="description" name="description"></textarea>
+      <br>
       <button type="submit">Upload</button>
     </form>
     <div id="map" style="height: 90vh"></div>
