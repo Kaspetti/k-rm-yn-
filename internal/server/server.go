@@ -30,6 +30,15 @@ func StartServer(ip, port string) error {
         })
     })
     r.GET("/admin", func(c *gin.Context) {
+        sessionCookie, err := c.Cookie("session")
+        if err != nil || sessionCookie != sessionToken {
+            c.JSON(http.StatusUnauthorized, gin.H {
+                "code": http.StatusUnauthorized,
+                "message": "unauthorized session",
+            })
+            return
+        }
+
         c.HTML(http.StatusOK, "admin.html", gin.H {
             "title": "Karmøy Admin",
         })
