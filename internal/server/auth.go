@@ -4,10 +4,19 @@ import (
 	"crypto/subtle"
 	"net/http"
 	"os"
+	"sync"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+)
+
+
+var (
+    sessionToken    string
+    tokenExpiration time.Time
+    tokenMutex      sync.RWMutex
 )
 
 
@@ -34,7 +43,12 @@ func login(c *gin.Context) {
         return
     }
 
-    sessionToken := uuid.New().String()
+
+    tokenMutex.Lock()
+    sessionToken = uuid.New().String()
+    tokenExpiration = time.Now().Add(1 * time.Hour)
+    tokenMutex.Unlock()
+
     c.SetCookie("session", sessionToken, 3600, "/admin", "karmoy.kaspeti.com", true, true)
     c.Redirect(http.StatusFound, "/admin")
 }
