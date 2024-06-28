@@ -31,8 +31,8 @@ function init() {
     if (drag) {
       circle.setLatLng(e.latlng)
 
-      latInput.value = e.latlng.lat
-      lonInput.value = e.latlng.lng
+      latInput.value = e.latlng.lat.toFixed(4)
+      lonInput.value = e.latlng.lng.toFixed(4)
     }
   })
 }
