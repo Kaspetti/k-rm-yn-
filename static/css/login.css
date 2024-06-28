@@ -3,3 +3,8 @@ label {
   width: 100px;
 }
 
+
+#error-message {
+  font-size: 14px;
+  color: red;
+}

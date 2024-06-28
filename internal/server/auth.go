@@ -48,5 +48,5 @@ func login(c *gin.Context) {
     tokenMutex.Unlock()
 
     c.SetCookie("session", sessionToken, 3600, "/admin", "karmoy.kaspeti.com", true, true)
-    c.Redirect(http.StatusFound, "/admin")
+    c.Redirect(http.StatusSeeOther, "/admin")
 }
