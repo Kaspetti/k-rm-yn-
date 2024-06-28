@@ -32,11 +32,9 @@ func StartServer(ip, port string) error {
     })
     r.GET("/admin", func(c *gin.Context) {
         sessionCookie, err := c.Cookie("session")
+        // Redirect to login page if no session cookie is found
         if err != nil {
-            c.JSON(http.StatusUnauthorized, gin.H {
-                "code": http.StatusUnauthorized,
-                "message": "no session cookie found",
-            })
+            c.Redirect(http.StatusSeeOther, "/login?auth_status=no_session")
             return
         }
 
@@ -45,11 +43,13 @@ func StartServer(ip, port string) error {
         expirationTime := tokenExpiration
         tokenMutex.RUnlock()
 
-        if sessionCookie != validToken || time.Now().After(expirationTime) {
-            c.JSON(http.StatusUnauthorized, gin.H {
-                "code": http.StatusUnauthorized,
-                "message": "unauthorized session",
-            })
+        if sessionCookie != validToken {
+            c.Redirect(http.StatusSeeOther, "/login?auth_status=invalid_session")
+            return
+        }
+
+        if time.Now().After(expirationTime) {
+            c.Redirect(http.StatusSeeOther, "/login?auth_status=expried_session")
             return
         }
 

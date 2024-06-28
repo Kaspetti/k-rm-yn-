@@ -33,21 +33,14 @@ func login(c *gin.Context) {
     adminPass := os.Getenv("ADMIN_PWD_HASH")
 
     if subtle.ConstantTimeCompare([]byte(uname), []byte(adminUname)) != 1 {
-        c.JSON(http.StatusUnauthorized, gin.H {
-            "code": http.StatusUnauthorized,
-            "message": "invalid credentials",
-        })
+        c.Redirect(http.StatusSeeOther, "/login?auth_status=invalid_credentials")
         return
     }
 
     if bcrypt.CompareHashAndPassword([]byte(adminPass), []byte(pass)) != nil || uname != adminUname {
-        c.JSON(http.StatusUnauthorized, gin.H {
-            "code": http.StatusUnauthorized,
-            "message": "invalid credentials",
-        })
+        c.Redirect(http.StatusSeeOther, "/login?auth_status=invalid_credentials")
         return
     }
-
 
     tokenMutex.Lock()
     sessionToken = uuid.New().String()
