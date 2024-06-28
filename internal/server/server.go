@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/Kaspetti/k-rm-yn-/internal/data"
 	"github.com/gin-gonic/gin"
@@ -31,7 +32,20 @@ func StartServer(ip, port string) error {
     })
     r.GET("/admin", func(c *gin.Context) {
         sessionCookie, err := c.Cookie("session")
-        if err != nil || sessionCookie != sessionToken {
+        if err != nil {
+            c.JSON(http.StatusUnauthorized, gin.H {
+                "code": http.StatusUnauthorized,
+                "message": "no session cookie found",
+            })
+            return
+        }
+
+        tokenMutex.RLock()
+        validToken := sessionToken
+        expirationTime := tokenExpiration
+        tokenMutex.RUnlock()
+
+        if sessionCookie != validToken || time.Now().After(expirationTime) {
             c.JSON(http.StatusUnauthorized, gin.H {
                 "code": http.StatusUnauthorized,
                 "message": "unauthorized session",

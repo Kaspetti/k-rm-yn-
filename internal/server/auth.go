@@ -13,6 +13,11 @@ import (
 )
 
 
+const (
+    tokenMaxAge = 1 * time.Hour
+)
+
+
 var (
     sessionToken    string
     tokenExpiration time.Time
@@ -46,7 +51,7 @@ func login(c *gin.Context) {
 
     tokenMutex.Lock()
     sessionToken = uuid.New().String()
-    tokenExpiration = time.Now().Add(1 * time.Hour)
+    tokenExpiration = time.Now().Add(tokenMaxAge)
     tokenMutex.Unlock()
 
     c.SetCookie("session", sessionToken, 3600, "/admin", "karmoy.kaspeti.com", true, true)
