@@ -58,6 +58,7 @@ func StartServer(ip, port string) error {
         })
     })
 
+
     api := r.Group("/api")
     {
         // Get the data from the csv file using the data package

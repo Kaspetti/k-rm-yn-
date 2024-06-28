@@ -9,7 +9,7 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
 
-    <link rel="stylesheet" href="/static/css/index.css"/>
+    <link rel="stylesheet" href="/static/css/admin.css"/>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -18,10 +18,20 @@
   </head>
 
   <body>
-    <form action="/api/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" id="file" name="file" required>
+    <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+      <label for="latitude">Latitude: </label>
+      <input type="number" step="0.0001" min="-90" max="90" id="latitude" name="latitude" value="60.3850" autocomplete="off" required>
       <br>
-      <textarea id="description" name="description"></textarea>
+      <label for="longitude">Longitude: </label>
+      <input type="number" step="0.0001" min="-180" max="180" id="longitude" name="longitude" value="5.3400" autocomplete="off" required>
+      <br>
+      <label for="file">Image: </label>
+      <input type="file" id="file" name="file" autocomplete="off" required>
+      <br>
+      <div id="description-container">
+        <label for="description">Description: </label>
+        <textarea id="description" name="description" autocomplete="off"></textarea>
+      </div>
       <br>
       <button type="submit">Upload</button>
     </form>

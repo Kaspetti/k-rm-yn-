@@ -1,0 +1,15 @@
+label {
+  display: inline-block;
+  width: 100px;
+}
+
+
+#description-container {
+  display: flex;
+  align-items: center;
+}
+
+
+#description-container label {
+  margin-right: 5px;
+}
