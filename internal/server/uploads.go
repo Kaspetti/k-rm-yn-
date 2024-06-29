@@ -13,6 +13,11 @@ import (
 
 
 func uploadFile(c *gin.Context) {
+    isValidSession, errorMessage := validSession(c)
+    if !isValidSession {
+        c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
+    }
+
     file, err := c.FormFile("file")
     if err != nil {
         log.Println(err)

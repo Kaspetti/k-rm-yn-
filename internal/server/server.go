@@ -31,26 +31,9 @@ func StartServer(ip, port string) error {
         })
     })
     r.GET("/admin", func(c *gin.Context) {
-        sessionCookie, err := c.Cookie("session")
-        // Redirect to login page if no session cookie is found
-        if err != nil {
-            c.Redirect(http.StatusSeeOther, "/login?auth_status=no_session")
-            return
-        }
-
-        tokenMutex.RLock()
-        validToken := sessionToken
-        expirationTime := tokenExpiration
-        tokenMutex.RUnlock()
-
-        if sessionCookie != validToken {
-            c.Redirect(http.StatusSeeOther, "/login?auth_status=invalid_session")
-            return
-        }
-
-        if time.Now().After(expirationTime) {
-            c.Redirect(http.StatusSeeOther, "/login?auth_status=expried_session")
-            return
+        isValidSession, errorMessage := validSession(c)
+        if !isValidSession {
+            c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
         }
 
         c.HTML(http.StatusOK, "admin.html", gin.H {
@@ -81,4 +64,28 @@ func StartServer(ip, port string) error {
 
     log.Printf("Start listening on: %s:%s\n", ip, port)
     return r.Run(fmt.Sprintf("%s:%s", ip, port))
+}
+
+
+func validSession(c *gin.Context) (bool, string) {
+    sessionCookie, err := c.Cookie("session")
+    // Redirect to login page if no session cookie is found
+    if err != nil {
+        return false, "no_session"
+    }
+
+    tokenMutex.RLock()
+    validToken := sessionToken
+    expirationTime := tokenExpiration
+    tokenMutex.RUnlock()
+
+    if sessionCookie != validToken {
+        return false, "invalid_session"
+    }
+
+    if time.Now().After(expirationTime) {
+        return false, "expired_session"
+    }
+
+    return true, ""
 }
