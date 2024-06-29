@@ -101,7 +101,7 @@ func uploadFile(c *gin.Context) {
         return
     }
 
-    c.Redirect(http.StatusSeeOther, "/admin?upload_statu=success")
+    c.Redirect(http.StatusSeeOther, "/admin?upload_status=success")
 }
 
 
