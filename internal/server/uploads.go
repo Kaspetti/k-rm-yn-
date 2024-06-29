@@ -14,8 +14,10 @@ import (
 
 func uploadFile(c *gin.Context) {
     isValidSession, errorMessage := validSession(c)
+    _ = errorMessage
     if !isValidSession {
-        c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
+        // c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
+        c.Redirect(http.StatusSeeOther, "/login?auth_status=")
         return
     }
 
