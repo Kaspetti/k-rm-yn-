@@ -13,3 +13,9 @@ label {
 #description-container label {
   margin-right: 5px;
 }
+
+
+#error-message {
+  font-size: 14px;
+  color: red;
+}

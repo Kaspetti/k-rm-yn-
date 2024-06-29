@@ -58,6 +58,13 @@ func StartServer(ip, port string) error {
         })
     })
 
+    // //TEST
+    r.GET("/testadmin", func(c *gin.Context) {
+        c.HTML(http.StatusOK, "admin.html", gin.H {
+            "title": "Karmøy Admin",
+        })
+    })
+
     api := r.Group("/api")
     {
         // Get the data from the csv file using the data package
