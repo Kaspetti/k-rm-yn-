@@ -16,6 +16,7 @@ func uploadFile(c *gin.Context) {
     isValidSession, errorMessage := validSession(c)
     if !isValidSession {
         c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
+        return
     }
 
     file, err := c.FormFile("file")

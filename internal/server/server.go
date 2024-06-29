@@ -34,6 +34,7 @@ func StartServer(ip, port string) error {
         isValidSession, errorMessage := validSession(c)
         if !isValidSession {
             c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
+            return
         }
 
         c.HTML(http.StatusOK, "admin.html", gin.H {
