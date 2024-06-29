@@ -15,7 +15,7 @@ label {
 }
 
 
-#error-message {
+#status-message {
   font-size: 14px;
   color: red;
 }
