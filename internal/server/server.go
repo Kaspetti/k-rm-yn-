@@ -31,9 +31,8 @@ func StartServer(ip, port string) error {
         })
     })
     r.GET("/admin", func(c *gin.Context) {
-        isValidSession, errorMessage := validSession(c)
-        if !isValidSession {
-            c.Redirect(http.StatusSeeOther, fmt.Sprintf("/login?auth_status=%s", errorMessage))
+        if !validSession(c) {
+            c.Redirect(http.StatusSeeOther, "/login?auth_status=no_session")
             return
         }
 
@@ -68,11 +67,11 @@ func StartServer(ip, port string) error {
 }
 
 
-func validSession(c *gin.Context) (bool, string) {
+func validSession(c *gin.Context) bool {
     sessionCookie, err := c.Cookie("session")
     // Redirect to login page if no session cookie is found
     if err != nil {
-        return false, "no_session"
+        return false
     }
 
     tokenMutex.RLock()
@@ -81,12 +80,12 @@ func validSession(c *gin.Context) (bool, string) {
     tokenMutex.RUnlock()
 
     if sessionCookie != validToken {
-        return false, "invalid_session"
+        return false
     }
 
     if time.Now().After(expirationTime) {
-        return false, "expired_session"
+        return false
     }
 
-    return true, ""
+    return true
 }
