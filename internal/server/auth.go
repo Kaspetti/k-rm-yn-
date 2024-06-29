@@ -47,6 +47,6 @@ func login(c *gin.Context) {
     tokenExpiration = time.Now().Add(tokenMaxAge)
     tokenMutex.Unlock()
 
-    c.SetCookie("session", sessionToken, 3600, "/admin", "karmoy.kaspeti.com", true, true)
+    c.SetCookie("session", sessionToken, 3600, "/", "karmoy.kaspeti.com", true, true)
     c.Redirect(http.StatusSeeOther, "/admin")
 }
