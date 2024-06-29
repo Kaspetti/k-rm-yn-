@@ -14,29 +14,6 @@ import (
 
 
 func uploadFile(c *gin.Context) {
-    sessionCookie, err := c.Cookie("session")
-    // Redirect to login page if no session cookie is found
-    if err != nil {
-        c.Redirect(http.StatusSeeOther, "/login?auth_status=no_session")
-        return
-    }
-
-    tokenMutex.RLock()
-    validToken := sessionToken
-    expirationTime := tokenExpiration
-    tokenMutex.RUnlock()
-
-    if sessionCookie != validToken {
-        c.Redirect(http.StatusSeeOther, "/login?auth_status=invalid_session")
-        return
-    }
-
-    if time.Now().After(expirationTime) {
-        c.Redirect(http.StatusSeeOther, "/login?auth_status=expried_session")
-        return
-    }
-
-
     file, err := c.FormFile("file")
     if err != nil {
         log.Println(err)
