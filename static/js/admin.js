@@ -7,28 +7,28 @@ const statusMessage = document.getElementById("status-message")
 
 switch (searchParams.get("upload_status")) {
   case "file_error":
-    errorMessage.innerText = "Error occured while getting file from form"
+    statusMessage.innerText = "Error occured while getting file from form"
     break
   case "invalid_filetype":
-    errorMessage.innerText = "Invalid filetype. Supported filetype: '.jpg'"
+    statusMessage.innerText = "Invalid filetype. Supported filetype: '.jpg'"
     break
   case "count_error":
-    errorMessage.innerText = "Error while counting images. Automatic naming of the file unavailable. Try again later..."
+    statusMessage.innerText = "Error while counting images. Automatic naming of the file unavailable. Try again later..."
     break
   case "invalid_lat":
-    errorMessage.innerText = "Invalid latitude"
+    statusMessage.innerText = "Invalid latitude"
     break
   case "invalid_lon":
-    errorMessage.innerText = "Invalid longitude"
+    statusMessage.innerText = "Invalid longitude"
     break
   case "file_upload_error":
-    errorMessage.innerText = "Error while uploading the file to the server"
+    statusMessage.innerText = "Error while uploading the file to the server"
     break
   case "data_write_error":
-    errorMessage.innerText = "Error while writing new data to the server"
+    statusMessage.innerText = "Error while writing new data to the server"
     break
   case "data_read_error":
-    errorMessage.innerText = "Error while reading old data for appending"
+    statusMessage.innerText = "Error while reading old data for appending"
     break
 }
 
