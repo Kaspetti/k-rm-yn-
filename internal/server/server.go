@@ -58,13 +58,12 @@ func StartServer(ip, port string) error {
         })
     })
 
-
     api := r.Group("/api")
     {
         // Get the data from the csv file using the data package
         // and send it to the user
         api.GET("/data", func(c *gin.Context) {
-            karmoyStickers, err := data.GetData("data.csv")
+            karmoyStickers, err := data.GetData("data.json")
             if err != nil {
                 log.Printf("Error: %v\n", err)
                 c.JSON(http.StatusInternalServerError, gin.H {

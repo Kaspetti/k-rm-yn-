@@ -5,7 +5,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
+	"github.com/Kaspetti/k-rm-yn-/internal/data"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +15,6 @@ import (
 func uploadFile(c *gin.Context) {
     file, err := c.FormFile("file")
     if err != nil {
-        // TODO: HANDLE ERROR!
         log.Println(err)
         c.Redirect(http.StatusSeeOther, "/admin?upload_status=server_error")
         return
@@ -32,17 +33,56 @@ func uploadFile(c *gin.Context) {
         return
     }
 
-    fmt.Println(imageCounts)
+    lat := c.PostForm("latitude")
+    lon := c.PostForm("longitude")
+    desc := c.PostForm("description")
 
-    c.JSON(http.StatusNotImplemented, gin.H {
-        "code": http.StatusNotImplemented,
-        "message": "This endpoint is not functional yet",
+    d, err := data.GetData("data.json")
+    if err != nil {
+        log.Println(err)
+        c.Redirect(http.StatusSeeOther, "/admin?upload_status=server_error")
+        return
+    }
+
+    latFloat, err := strconv.ParseFloat(lat, 64)
+    if err != nil {
+        log.Println(err)
+        c.Redirect(http.StatusSeeOther, "/admin?upload_status=server_error")
+        return
+    }
+
+    lonFloat, err := strconv.ParseFloat(lon, 64)
+    if err != nil {
+        log.Println(err)
+        c.Redirect(http.StatusSeeOther, "/admin?upload_status=server_error")
+        return
+    }
+
+    d = append(d, data.KarmoySticker {
+        ID: imageCounts,
+        Latitude: latFloat,
+        Longitude: lonFloat,
+        Description: desc,
     })
+
+    if err := c.SaveUploadedFile(file, fmt.Sprintf("./static/images/%d.jpg", imageCounts)); err != nil {
+        log.Println(err)
+        c.Redirect(http.StatusSeeOther, "/admin?upload_status=server_error")
+        return
+    } 
+
+    if err := data.SaveData("data.json", d); err != nil {
+        log.Println(err)
+        c.Redirect(http.StatusSeeOther, "/admin?upload_status=server_error")
+        return
+    }
+
+    c.Redirect(http.StatusSeeOther, "/admin?upload_statu=success")
 }
 
 
-func fileCount(path string) (int, error){
-    i := 0
+func fileCount(path string) (uint16, error){
+    var i uint16 = 0
     files, err := os.ReadDir(path)
     if err != nil {
         return 0, err

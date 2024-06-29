@@ -9,7 +9,7 @@ let drag = false
 
 function init() {
   map = L.map('map')
-    .setView([60.385, 5.34], 14.5)
+    .setView([60.385, 5.34], 16)
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -31,8 +31,8 @@ function init() {
     if (drag) {
       circle.setLatLng(e.latlng)
 
-      latInput.value = e.latlng.lat.toFixed(4)
-      lonInput.value = e.latlng.lng.toFixed(4)
+      latInput.value = e.latlng.lat.toFixed(5)
+      lonInput.value = e.latlng.lng.toFixed(5)
     }
   })
 }
