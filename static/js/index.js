@@ -77,7 +77,7 @@ function populateCircles() {
       focusing = true
       map.on("zoomend moveend", function() {
         if (focusing) {
-          tooltip.style.transform = `translate(${window.innerWidth/2}px, ${window.innerHeight/2}px)`;
+          tooltip.style.transform = `translate(${window.innerWidth/2 - tooltip.offsetWidth/2}px, ${window.innerHeight/2}px)`;
           tooltip.style.opacity = 1
           focusing = false
         }
