@@ -30,38 +30,3 @@
   object-fit: contain;
   margin-left: 1em;
 }
-
-#timeline {
-  position: absolute;
-  z-index: 999;
-  width: 10em;
-  height: 3em;
-  background-color: #999d;
-  bottom: 2em;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1em;
-  text-align: center;
-}
-
-#timeline button {
-  height: 3em;
-  width: 3em;
-  margin: 0 0.5em;
-  background-color: #444d;
-  border: none;
-  font-size: 1.2em;
-  border-radius: 5px;
-}
-
-#timeline button:hover {
-  background-color: #222d;
-}
-
-#timeline p {
-  width: 1.5em;
-}
