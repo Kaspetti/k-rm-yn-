@@ -9,3 +9,6 @@ static/images/
 bin/
 
 .env
+
+*.json
+*.csv
