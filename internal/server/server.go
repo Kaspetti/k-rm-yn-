@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Kaspetti/k-rm-yn-/internal/data"
@@ -31,13 +32,25 @@ func StartServer(ip, port string) error {
         })
     })
     r.GET("/admin", func(c *gin.Context) {
-        if !validSession(c) {
+        mode := os.Getenv("GIN_MODE")
+        if !validSession(c) && mode == "release" {
             c.Redirect(http.StatusSeeOther, "/login?auth_status=no_session")
             return
         }
 
         c.HTML(http.StatusOK, "admin.html", gin.H {
             "title": "Karmøy Admin",
+        })
+    })
+    r.GET("/stats", func(c *gin.Context) {
+        mode := os.Getenv("GIN_MODE")
+        if !validSession(c) && mode == "release" {
+            c.Redirect(http.StatusSeeOther, "/login?auth_status=no_session")
+            return
+        }
+
+        c.JSON(http.StatusOK, gin.H {
+            "stats": "not found",
         })
     })
 

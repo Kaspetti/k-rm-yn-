@@ -12,3 +12,5 @@ bin/
 
 *.json
 *.csv
+
+tmp/

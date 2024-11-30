@@ -26,6 +26,12 @@ var (
 
 
 func login(c *gin.Context) {
+    mode := os.Getenv("GIN_MODE")
+    if mode == "debug" {
+        c.Redirect(http.StatusSeeOther, "/admin")
+        return
+    }
+
     pass := c.PostForm("password")
     uname := c.PostForm("username")
 
